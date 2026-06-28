@@ -1,0 +1,1009 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2026 清邁親子慢遊手帳</title>
+    <style>
+        :root {
+            --bg-color: #F7F4EF;
+            --dark-gray: #3A3A3A;
+            --light-gray: #EAE5DC;
+            --card-bg: #FFFFFF;
+            --link-color: #2F7491;
+            --accent-pink: #F9DAD8;
+            --text-pink: #9E5E5A;
+            --muted-icon: #ABA395;
+            --routine-bg: #FBF8F1;
+
+            --d1-bg: #E3E7EC; --d1-text: #4F6478;
+            --d2-bg: #D4E2D4; --d2-text: #4A6B4A;
+            --d3-bg: #E3DDF5; --d3-text: #6B5B95;
+            --d4-bg: #FBEEC9; --d4-text: #9C7A29;
+            --d5-bg: #FBE0DC; --d5-text: #B5594B;
+            --d6-bg: #DCEEF7; --d6-text: #2F7491;
+            --d7-bg: #F0E6D2; --d7-text: #8C6D3F;
+            --d8-bg: #ECE6E0; --d8-text: #6B5847;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Microsoft JhengHei", sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--dark-gray);
+            line-height: 1.5;
+            padding-bottom: 80px;
+        }
+
+        .header {
+            background: linear-gradient(180deg, #F0EDE5 0%, var(--bg-color) 100%);
+            border-bottom: 2px dashed var(--light-gray);
+            overflow: hidden;
+        }
+
+        .header-illustration { width: 100%; display: block; }
+
+        .header-text { text-align: center; padding: 4px 20px 18px 20px; }
+        .header-text h1 { font-size: 22px; font-weight: 700; letter-spacing: 0.5px; margin-bottom: 5px; }
+        .header-text p { font-size: 13px; color: #7A756B; }
+
+        .nav-bar {
+            display: flex;
+            padding: 12px 15px;
+            background-color: var(--bg-color);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px dashed var(--light-gray);
+            overflow-x: auto;
+            scrollbar-width: none;
+        }
+        .nav-bar::-webkit-scrollbar { display: none; }
+
+        .nav-item {
+            background-color: var(--card-bg);
+            border: 1px solid var(--light-gray);
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            text-decoration: none;
+            color: var(--dark-gray);
+            font-weight: bold;
+            white-space: nowrap;
+            margin-right: 5px;
+            transition: background-color 0.2s, color 0.2s;
+            position: relative;
+        }
+
+        .nav-item.active { background-color: var(--dark-gray); color: #FFFFFF; border-color: var(--dark-gray); }
+
+        .nav-item .today-dot {
+            display: inline-block;
+            width: 6px; height: 6px;
+            border-radius: 50%;
+            background-color: #E2574C;
+            margin-left: 4px;
+        }
+
+        .day-container { padding: 15px; scroll-margin-top: 56px; }
+
+        .day-header { display: flex; align-items: center; gap: 10px; margin-bottom: 15px; }
+        .day-badge { width: 40px; height: 40px; flex-shrink: 0; transform: rotate(-6deg); }
+
+        .day-title-box {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 16px;
+            border-radius: 12px 12px 12px 0px;
+            font-weight: bold;
+            font-size: 15px;
+            box-shadow: 2px 2px 0px rgba(58, 58, 58, 0.06);
+        }
+
+        .day1 .day-title-box { background-color: var(--d1-bg); color: var(--d1-text); }
+        .day2 .day-title-box { background-color: var(--d2-bg); color: var(--d2-text); }
+        .day3 .day-title-box { background-color: var(--d3-bg); color: var(--d3-text); }
+        .day4 .day-title-box { background-color: var(--d4-bg); color: var(--d4-text); }
+        .day5 .day-title-box { background-color: var(--d5-bg); color: var(--d5-text); }
+        .day6 .day-title-box { background-color: var(--d6-bg); color: var(--d6-text); }
+        .day7 .day-title-box { background-color: var(--d7-bg); color: var(--d7-text); }
+        .day8 .day-title-box { background-color: var(--d8-bg); color: var(--d8-text); }
+
+        .today-badge {
+            display: inline-block;
+            background-color: #E2574C;
+            color: #FFFFFF;
+            font-size: 10px;
+            padding: 2px 8px;
+            border-radius: 10px;
+            white-space: nowrap;
+        }
+
+        .timeline { position: relative; padding-left: 20px; }
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 4px; top: 5px; bottom: 5px;
+            width: 2px;
+            border-left: 2px dashed var(--light-gray);
+        }
+
+        .timeline-item { position: relative; margin-bottom: 12px; }
+
+        .timeline-dot {
+            position: absolute;
+            left: -20px; top: 6px;
+            width: 10px; height: 10px;
+            border-radius: 50%;
+            background-color: #C2BBB0;
+            border: 2px solid var(--bg-color);
+        }
+
+        .timeline-dot.dot-transit {
+            width: 6px; height: 6px;
+            left: -18px; top: 7px;
+            background-color: #D8D4CB;
+        }
+
+        /* Type A：重點行程卡 */
+        .card {
+            background-color: var(--card-bg);
+            border-radius: 16px;
+            padding: 14px;
+            border: 1px solid rgba(234, 229, 220, 0.6);
+            box-shadow: 0 4px 12px rgba(58, 58, 58, 0.03);
+        }
+
+        .time-badge { font-size: 12px; font-weight: bold; color: #8A8273; margin-bottom: 4px; }
+        .event-title { font-size: 15px; font-weight: bold; margin-bottom: 4px; }
+
+        .info-block {
+            font-size: 12px;
+            color: #7A7A7A;
+            background-color: #FBFBFA;
+            padding: 8px;
+            border-radius: 8px;
+            margin-top: 6px;
+            border: 1px solid #F2EFE9;
+        }
+
+        .info-title { font-weight: bold; color: #5A5A5A; margin-bottom: 2px; }
+
+        .map-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 3px;
+            color: var(--link-color);
+            font-weight: bold;
+            text-decoration: none;
+            border-bottom: 1px dashed var(--link-color);
+        }
+
+        .remark { margin-top: 5px; }
+
+        .sub-line { padding: 6px 0; border-top: 1px dashed var(--light-gray); }
+        .sub-line:first-child { border-top: none; padding-top: 0; }
+        .sub-line.alert-text {
+            background-color: var(--accent-pink);
+            color: var(--text-pink);
+            padding: 6px 8px;
+            border-radius: 6px;
+            margin-top: 4px;
+            border-top: none;
+        }
+
+        .alert-card { background-color: var(--accent-pink); color: var(--text-pink); border: 1px solid #F2C4C1; }
+        .alert-card .time-badge { color: var(--text-pink); }
+        .alert-card .info-block { background-color: rgba(255, 255, 255, 0.5); border: 1px solid #E8B4B1; color: var(--text-pink); }
+        .alert-card .info-title { color: var(--text-pink); }
+        .alert-card .map-link { color: var(--text-pink); border-bottom-color: var(--text-pink); }
+
+        /* Type B：純交通移動（Grab／步行） */
+        .entry-transit {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            padding: 3px 2px;
+            font-size: 11.5px;
+            color: var(--muted-icon);
+        }
+
+        .row-icon-circle {
+            width: 20px; height: 20px;
+            border-radius: 50%;
+            background-color: #EFEAE0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .entry-transit .transit-time { font-weight: bold; min-width: 78px; }
+
+        /* Type C：飯店日常（早餐／休息／游泳） */
+        .card.routine {
+            background-color: var(--routine-bg);
+            border: 1px dashed var(--light-gray);
+            box-shadow: none;
+        }
+
+        .card.routine .event-title {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            font-size: 14px;
+            color: #6E6A60;
+        }
+
+        .card.routine .time-badge { color: #A39C8C; }
+
+        /* 預訂資訊面板 */
+        .info-panel {
+            position: fixed;
+            bottom: 65px; left: 0; right: 0;
+            background-color: #FFFFFF;
+            border-top: 2px dashed var(--light-gray);
+            border-radius: 16px 16px 0 0;
+            box-shadow: 0 -6px 16px rgba(0,0,0,0.06);
+            z-index: 199;
+            padding: 16px 18px;
+            max-height: 60vh;
+            overflow-y: auto;
+        }
+        .info-panel h3 { font-size: 14px; margin-bottom: 10px; color: var(--dark-gray); }
+        .info-panel-item { font-size: 12px; padding: 8px 0; border-bottom: 1px dashed var(--light-gray); }
+        .info-panel-item:last-child { border-bottom: none; }
+        .info-panel-item .info-title { margin-bottom: 2px; }
+
+        /* 底部固定工具欄 */
+        .footer-bar {
+            position: fixed;
+            bottom: 0; left: 0; right: 0;
+            height: 65px;
+            background-color: #FFFFFF;
+            border-top: 1px solid var(--light-gray);
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            padding: 0 10px;
+            z-index: 200;
+            box-shadow: 0 -4px 10px rgba(0,0,0,0.02);
+        }
+
+        .footer-btn {
+            background-color: var(--bg-color);
+            border: 1px solid var(--light-gray);
+            padding: 8px 16px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: bold;
+            color: var(--dark-gray);
+            text-align: center;
+            cursor: pointer;
+            flex: 1;
+            margin: 0 5px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <svg class="header-illustration" viewBox="0 0 360 110" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="清邁山景插畫：太陽、雲朵、寺廟與大象剪影">
+            <circle cx="55" cy="32" r="24" fill="#FBE3B4" opacity="0.35"/>
+            <circle cx="55" cy="32" r="15" fill="#FBE3B4"/>
+            <path d="M96,18 q4,-5 8,0 q4,-5 8,0" stroke="#C9BBA8" stroke-width="1.3" fill="none" stroke-linecap="round"/>
+            <path d="M126,28 q3,-4 6,0 q3,-4 6,0" stroke="#C9BBA8" stroke-width="1.1" fill="none" stroke-linecap="round"/>
+            <ellipse cx="170" cy="20" rx="16" ry="7" fill="#FFFFFF" opacity="0.7"/>
+            <ellipse cx="180" cy="16" rx="10" ry="6" fill="#FFFFFF" opacity="0.7"/>
+            <ellipse cx="270" cy="30" rx="22" ry="10" fill="#FFFFFF" opacity="0.85"/>
+            <ellipse cx="284" cy="24" rx="14" ry="9" fill="#FFFFFF" opacity="0.85"/>
+            <ellipse cx="258" cy="26" rx="12" ry="8" fill="#FFFFFF" opacity="0.85"/>
+            <path d="M0,90 L40,55 L70,80 L110,40 L150,75 L190,50 L230,82 L270,48 L310,78 L360,55 L360,110 L0,110 Z" fill="#CFE0D6"/>
+            <g transform="translate(100,18)">
+                <path d="M0,22 L20,22 L15,13 L5,13 Z" fill="#C97B63"/>
+                <path d="M5,13 L15,13 L12,6 L8,6 Z" fill="#C97B63"/>
+                <line x1="10" y1="6" x2="10" y2="0" stroke="#C97B63" stroke-width="1.4"/>
+            </g>
+            <path d="M0,100 L30,75 L60,95 L100,65 L140,92 L180,68 L220,96 L260,70 L300,98 L360,80 L360,110 L0,110 Z" fill="#AECBB7"/>
+            <g transform="translate(233,78)">
+                <ellipse cx="15" cy="15" rx="13" ry="9" fill="#8C7A6B"/>
+                <circle cx="27" cy="9" r="7" fill="#8C7A6B"/>
+                <path d="M33,11 q4,5 1,10" stroke="#8C7A6B" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+                <rect x="6" y="20" width="3" height="7" rx="1.5" fill="#8C7A6B"/>
+                <rect x="18" y="20" width="3" height="7" rx="1.5" fill="#8C7A6B"/>
+                <circle cx="27" cy="8" r="1" fill="#F7F4EF"/>
+            </g>
+        </svg>
+        <div class="header-text">
+            <h1>清邁親子慢遊手帳</h1>
+            <p>2026/07/01 - 07/08 兩大一小原生態探險</p>
+        </div>
+    </div>
+
+    <div class="nav-bar" id="navBar">
+        <a href="#day1" class="nav-item" data-day="day1">7/1 (三)</a>
+        <a href="#day2" class="nav-item" data-day="day2">7/2 (四)</a>
+        <a href="#day3" class="nav-item" data-day="day3">7/3 (五)</a>
+        <a href="#day4" class="nav-item" data-day="day4">7/4 (六)</a>
+        <a href="#day5" class="nav-item" data-day="day5">7/5 (日)</a>
+        <a href="#day6" class="nav-item" data-day="day6">7/6 (一)</a>
+        <a href="#day7" class="nav-item" data-day="day7">7/7 (二)</a>
+        <a href="#day8" class="nav-item" data-day="day8">7/8 (三)</a>
+    </div>
+
+    <!-- Day 1 -->
+    <div class="day-container day1" id="day1" data-date="2026-07-01">
+        <div class="day-header">
+            <svg class="day-badge" viewBox="0 0 36 36" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="高鐵圖示">
+                <circle cx="18" cy="18" r="18" fill="#4F6478"/>
+                <rect x="6" y="14" width="22" height="10" rx="5" fill="#FFFFFF"/>
+                <circle cx="12" cy="19" r="1.6" fill="#4F6478"/>
+                <circle cx="18" cy="19" r="1.6" fill="#4F6478"/>
+                <circle cx="24" cy="19" r="1.6" fill="#4F6478"/>
+                <circle cx="12" cy="25" r="2" fill="#FFFFFF"/>
+                <circle cx="22" cy="25" r="2" fill="#FFFFFF"/>
+            </svg>
+            <div class="day-title-box">7月1日 (三) 出發日</div>
+        </div>
+        <div class="timeline">
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="card">
+                    <div class="event-title">出發：台中 ➔ 桃園機場第一航廈</div>
+                    <div class="info-block">
+                        <div class="sub-line">高鐵：台中 ➔ 桃園</div>
+                        <div class="sub-line">轉乘捷運：桃園高鐵站 ➔ 桃園機場第一航廈</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Day 2 -->
+    <div class="day-container day2" id="day2" data-date="2026-07-02">
+        <div class="day-header">
+            <svg class="day-badge" viewBox="0 0 36 36" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="飛機圖示">
+                <circle cx="18" cy="18" r="18" fill="#4A6B4A"/>
+                <path d="M27 11 L9 18 L16 19.5 L18 27 L20.5 20 L27 11 Z" fill="#FFFFFF"/>
+            </svg>
+            <div class="day-title-box">7月2日 (四) 抵達清邁日</div>
+        </div>
+        <div class="timeline">
+
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="card">
+                    <div class="time-badge">00:20 - 15:10</div>
+                    <div class="event-title">台北 ➔ 吉隆坡 ➔ 清邁 (航班移動)</div>
+                    <div class="info-block">
+                        <div class="sub-line"><b>00:20 / 05:00</b> 台北 ➔ 吉隆坡｜AirAsia X, D7 379 Economy Promo</div>
+                        <div class="sub-line alert-text"><b>05:00 - 12:00</b> 吉隆坡遨途機場酒店過境休息（位於 KLIA2 國際出發大廳前，步行約1分鐘可達登機手續櫃台）<br>屬於非禁區（Landside）。旅客必須辦妥馬來西亞入境手續並通過海關與安全檢查後，才能前往飯店辦理入住。</div>
+                        <div class="sub-line"><b>13:30 / 15:10</b> 吉隆坡 ➔ 清邁｜AirAsia, AK 856 Economy Promo</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="card">
+                    <div class="time-badge">16:00 - 16:30</div>
+                    <div class="event-title">Grab 抵達｜Khum Phaya Resort & Spa Boutique Collection</div>
+                    <div class="info-block">
+                        <a class="map-link" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=137, Tambon Nong Pa Khrang, Mueang Chiang Mai District, Chiang Mai">📍 137, Tambon Nong Pa Khrang, Mueang Chiang Mai District, Chiang Mai</a>
+                        <div class="remark">15點 Check-in、12點 Check-out</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="card routine">
+                    <div class="time-badge">17:00 - 18:00</div>
+                    <div class="event-title">
+                        <span class="row-icon-circle"><svg width="11" height="11" viewBox="0 0 18 18"><path d="M2,9 q2,-3 4,0 q2,3 4,0 q2,-3 4,0 q2,3 4,0" stroke="#9C7A29" stroke-width="1.8" fill="none" stroke-linecap="round"/></svg></span>
+                        游泳
+                    </div>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-dot dot-transit"></div>
+                <div class="entry-transit">
+                    <span class="row-icon-circle"><svg width="11" height="11" viewBox="0 0 18 18"><rect x="2" y="8" width="14" height="5" rx="2" fill="#ABA395"/><circle cx="5.5" cy="14" r="1.6" fill="#ABA395"/><circle cx="12.5" cy="14" r="1.6" fill="#ABA395"/><path d="M3,8 L5,4 L13,4 L15,8 Z" fill="#ABA395"/></svg></span>
+                    <span class="transit-time">18:30-18:40</span> Grab
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="card">
+                    <div class="time-badge">18:40 - 19:40</div>
+                    <div class="event-title">尚泰購物中心 Central Chiangmai（晚餐：美食街）</div>
+                    <div class="info-block">
+                        <a class="map-link" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=99,99/1, 99/2 หมู่ที่ 4 Lampang - Chiang Mai Superhighway, Nong Pa Khrang, Mueang Chiang Mai District, Chiang Mai">📍 99,99/1, 99/2 หมู่ที่ 4 Lampang - Chiang Mai Superhighway, Nong Pa Khrang, Mueang Chiang Mai District, Chiang Mai</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="card">
+                    <div class="time-badge">19:40 - 21:30</div>
+                    <div class="event-title">尚泰購物中心 逛街</div>
+                    <div class="info-block">
+                        <div class="remark">sliptosleep 睡衣（清邁機場尚泰百貨 2 樓）／室內遊戲區 3 樓</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-dot dot-transit"></div>
+                <div class="entry-transit">
+                    <span class="row-icon-circle"><svg width="11" height="11" viewBox="0 0 18 18"><rect x="2" y="8" width="14" height="5" rx="2" fill="#ABA395"/><circle cx="5.5" cy="14" r="1.6" fill="#ABA395"/><circle cx="12.5" cy="14" r="1.6" fill="#ABA395"/><path d="M3,8 L5,4 L13,4 L15,8 Z" fill="#ABA395"/></svg></span>
+                    <span class="transit-time">21:30-21:40</span> Grab 回飯店
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Day 3 -->
+    <div class="day-container day3" id="day3" data-date="2026-07-03">
+        <div class="day-header">
+            <svg class="day-badge" viewBox="0 0 36 36" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="調色盤圖示">
+                <circle cx="18" cy="18" r="18" fill="#6B5B95"/>
+                <ellipse cx="18" cy="19" rx="11" ry="8" fill="#FFFFFF"/>
+                <ellipse cx="14" cy="22" rx="2.2" ry="1.6" fill="#6B5B95"/>
+                <circle cx="13" cy="14" r="1.8" fill="#F2B5A0"/>
+                <circle cx="19" cy="12" r="1.8" fill="#9FD1C7"/>
+                <circle cx="24" cy="16" r="1.8" fill="#F2D98A"/>
+            </svg>
+            <div class="day-title-box">7月3日 (五) 恐龍樂園與藝術博物館</div>
+        </div>
+        <div class="timeline">
+
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="card routine">
+                    <div class="time-badge">08:30 - 10:00</div>
+                    <div class="event-title">
+                        <span class="row-icon-circle"><svg width="11" height="11" viewBox="0 0 18 18"><path d="M4,6 h10 v6 a5,5 0 0 1 -10,0 z" fill="#9C7A29"/><path d="M14,8 q4,0 4,3 q0,3 -4,3" stroke="#9C7A29" stroke-width="1.4" fill="none"/></svg></span>
+                        飯店早餐
+                    </div>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-dot dot-transit"></div>
+                <div class="entry-transit">
+                    <span class="row-icon-circle"><svg width="11" height="11" viewBox="0 0 18 18"><rect x="2" y="8" width="14" height="5" rx="2" fill="#ABA395"/><circle cx="5.5" cy="14" r="1.6" fill="#ABA395"/><circle cx="12.5" cy="14" r="1.6" fill="#ABA395"/><path d="M3,8 L5,4 L13,4 L15,8 Z" fill="#ABA395"/></svg></span>
+                    <span class="transit-time">10:00-10:10</span> Grab
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="card">
+                    <div class="time-badge">10:10 - 15:00</div>
+                    <div class="event-title">恐龍樂園 Hidden Village Chiang Mai</div>
+                    <div class="info-block">
+                        <a class="map-link" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=77/19 หมู่ 7 168 บ้านท่าหลุก ซอย 8 San Phi Suea, Mueang Chiang Mai District, Chiang Mai">📍 77/19 หมู่ 7 168 บ้านท่าหลุก ซอย 8 San Phi Suea, Mueang Chiang Mai District, Chiang Mai</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-dot dot-transit"></div>
+                <div class="entry-transit">
+                    <span class="row-icon-circle"><svg width="11" height="11" viewBox="0 0 18 18"><rect x="2" y="8" width="14" height="5" rx="2" fill="#ABA395"/><circle cx="5.5" cy="14" r="1.6" fill="#ABA395"/><circle cx="12.5" cy="14" r="1.6" fill="#ABA395"/><path d="M3,8 L5,4 L13,4 L15,8 Z" fill="#ABA395"/></svg></span>
+                    <span class="transit-time">15:00-15:15</span> Grab
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="card">
+                    <div class="time-badge">15:15 - 18:00</div>
+                    <div class="event-title">3D視覺博物館 Art in Paradise Chiang Mai</div>
+                    <div class="info-block">
+                        <a class="map-link" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=58, 8 ถนน เจริญเมือง, Tha Sala Sub-district, Mueang Chiang Mai District, Chiang Mai">📍 58, 8 ถนน เจริญเมือง, Tha Sala Sub-district, Mueang Chiang Mai District, Chiang Mai</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-dot dot-transit"></div>
+                <div class="entry-transit">
+                    <span class="row-icon-circle"><svg width="11" height="11" viewBox="0 0 18 18"><rect x="2" y="8" width="14" height="5" rx="2" fill="#ABA395"/><circle cx="5.5" cy="14" r="1.6" fill="#ABA395"/><circle cx="12.5" cy="14" r="1.6" fill="#ABA395"/><path d="M3,8 L5,4 L13,4 L15,8 Z" fill="#ABA395"/></svg></span>
+                    <span class="transit-time">18:00-18:15</span> Grab
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="card">
+                    <div class="time-badge">18:15 - 20:00</div>
+                    <div class="event-title">Kadmanee Market</div>
+                    <div class="info-block">
+                        <a class="map-link" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=185 18 Thipanet Rd, Tambon Hai Ya, Mueang Chiang Mai District, Chiang Mai">📍 185 18 Thipanet Rd, Tambon Hai Ya, Mueang Chiang Mai District, Chiang Mai</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-dot dot-transit"></div>
+                <div class="entry-transit">
+                    <span class="row-icon-circle"><svg width="11" height="11" viewBox="0 0 18 18"><rect x="2" y="8" width="14" height="5" rx="2" fill="#ABA395"/><circle cx="5.5" cy="14" r="1.6" fill="#ABA395"/><circle cx="12.5" cy="14" r="1.6" fill="#ABA395"/><path d="M3,8 L5,4 L13,4 L15,8 Z" fill="#ABA395"/></svg></span>
+                    <span class="transit-time">20:00-20:15</span> Grab 回飯店
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Day 4 -->
+    <div class="day-container day4" id="day4" data-date="2026-07-04">
+        <div class="day-header">
+            <svg class="day-badge" viewBox="0 0 36 36" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="大象圖示">
+                <circle cx="18" cy="18" r="18" fill="#9C7A29"/>
+                <ellipse cx="15" cy="21" rx="8" ry="6" fill="#FFFFFF"/>
+                <circle cx="25" cy="17" r="5" fill="#FFFFFF"/>
+                <circle cx="26" cy="13" r="3" fill="#FFFFFF" opacity="0.9"/>
+                <path d="M28,18 q3,4 0,7" stroke="#FFFFFF" stroke-width="2.2" fill="none" stroke-linecap="round"/>
+                <rect x="10" y="25" width="3" height="5" rx="1.5" fill="#FFFFFF"/>
+                <rect x="18" y="25" width="3" height="5" rx="1.5" fill="#FFFFFF"/>
+                <circle cx="26" cy="16" r="0.8" fill="#9C7A29"/>
+            </svg>
+            <div class="day-title-box">7月4日 (六) 椰林市集 ➔ 大象營</div>
+        </div>
+        <div class="timeline">
+
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="card routine">
+                    <div class="time-badge">07:30 - 08:30</div>
+                    <div class="event-title">
+                        <span class="row-icon-circle"><svg width="11" height="11" viewBox="0 0 18 18"><path d="M4,6 h10 v6 a5,5 0 0 1 -10,0 z" fill="#9C7A29"/><path d="M14,8 q4,0 4,3 q0,3 -4,3" stroke="#9C7A29" stroke-width="1.4" fill="none"/></svg></span>
+                        飯店早餐
+                    </div>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-dot dot-transit"></div>
+                <div class="entry-transit">
+                    <span class="row-icon-circle"><svg width="11" height="11" viewBox="0 0 18 18"><rect x="2" y="8" width="14" height="5" rx="2" fill="#ABA395"/><circle cx="5.5" cy="14" r="1.6" fill="#ABA395"/><circle cx="12.5" cy="14" r="1.6" fill="#ABA395"/><path d="M3,8 L5,4 L13,4 L15,8 Z" fill="#ABA395"/></svg></span>
+                    <span class="transit-time">09:00-09:15</span> Grab
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="card">
+                    <div class="time-badge">09:15 - 11:00</div>
+                    <div class="event-title">椰林市集 Coconut Market</div>
+                    <div class="info-block">
+                        <a class="map-link" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=94 หมู่ที่ 3 ซอย บ้านโต้ง 2, Fa Ham, Mueang Chiang Mai District, Chiang Mai">📍 94 หมู่ที่ 3 ซอย บ้านโต้ง 2, Fa Ham, Mueang Chiang Mai District, Chiang Mai</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-dot dot-transit"></div>
+                <div class="entry-transit">
+                    <span class="row-icon-circle"><svg width="11" height="11" viewBox="0 0 18 18"><rect x="2" y="8" width="14" height="5" rx="2" fill="#ABA395"/><circle cx="5.5" cy="14" r="1.6" fill="#ABA395"/><circle cx="12.5" cy="14" r="1.6" fill="#ABA395"/><path d="M3,8 L5,4 L13,4 L15,8 Z" fill="#ABA395"/></svg></span>
+                    <span class="transit-time">11:00-11:05</span> Grab 回飯店
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="card">
+                    <div class="time-badge">12:15 - 13:15</div>
+                    <div class="event-title">飯店接駁 抵達｜Tawan Riverside - Elephant Resort</div>
+                    <div class="info-block">
+                        <a class="map-link" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=A, 202 Moo 9 T, Mae Win, Mae Wang District, Chiang Mai">📍 A, 202 Moo 9 T, Mae Win, Mae Wang District, Chiang Mai</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="card">
+                    <div class="time-badge">14:00 - 16:00</div>
+                    <div class="event-title">竹筏漂流、大象洗澡</div>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="card routine">
+                    <div class="time-badge">18:00 - 20:00</div>
+                    <div class="event-title">
+                        <span class="row-icon-circle"><svg width="11" height="11" viewBox="0 0 18 18"><path d="M4,6 h10 v6 a5,5 0 0 1 -10,0 z" fill="#9C7A29"/><path d="M14,8 q4,0 4,3 q0,3 -4,3" stroke="#9C7A29" stroke-width="1.4" fill="none"/></svg></span>
+                        飯店晚餐
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Day 5 -->
+    <div class="day-container day5" id="day5" data-date="2026-07-05">
+        <div class="day-header">
+            <svg class="day-badge" viewBox="0 0 36 36" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="博桑紙傘圖示">
+                <circle cx="18" cy="18" r="18" fill="#B5594B"/>
+                <path d="M8,18 A10,10 0 0 1 28,18 Z" fill="#FFFFFF"/>
+                <line x1="18" y1="8" x2="10" y2="17" stroke="#B5594B" stroke-width="1"/>
+                <line x1="18" y1="8" x2="14" y2="18" stroke="#B5594B" stroke-width="1"/>
+                <line x1="18" y1="8" x2="22" y2="18" stroke="#B5594B" stroke-width="1"/>
+                <line x1="18" y1="8" x2="26" y2="17" stroke="#B5594B" stroke-width="1"/>
+                <line x1="18" y1="18" x2="18" y2="27" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round"/>
+                <path d="M18,27 q3,0 3,3" stroke="#FFFFFF" stroke-width="2" fill="none" stroke-linecap="round"/>
+            </svg>
+            <div class="day-title-box">7月5日 (日) 真心市集 ➔ 古城夜市</div>
+        </div>
+        <div class="timeline">
+
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="card">
+                    <div class="time-badge">07:00 - 08:30</div>
+                    <div class="event-title">大象 Morning call</div>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="card">
+                    <div class="time-badge">10:00 - 11:00</div>
+                    <div class="event-title">飯店接駁 抵達，寄放行李｜POR Thapae Gate</div>
+                    <div class="info-block">
+                        <a class="map-link" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=9 Rachadamnoen 3 Alley, Si Phum, Mueang Chiang Mai District, Chiang Mai">📍 9 Rachadamnoen 3 Alley, Si Phum, Mueang Chiang Mai District, Chiang Mai</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-dot dot-transit"></div>
+                <div class="entry-transit">
+                    <span class="row-icon-circle"><svg width="11" height="11" viewBox="0 0 18 18"><rect x="2" y="8" width="14" height="5" rx="2" fill="#ABA395"/><circle cx="5.5" cy="14" r="1.6" fill="#ABA395"/><circle cx="12.5" cy="14" r="1.6" fill="#ABA395"/><path d="M3,8 L5,4 L13,4 L15,8 Z" fill="#ABA395"/></svg></span>
+                    <span class="transit-time">11:00-11:10</span> Grab
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="card">
+                    <div class="time-badge">11:10 - 14:00</div>
+                    <div class="event-title">真心市集 Jing Jai Market Chiang Mai</div>
+                    <div class="info-block">
+                        <a class="map-link" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=46 Atsadathon Rd, Pa Tan Sub-district, Mueang Chiang Mai District, Chiang Mai">📍 46 Atsadathon Rd, Pa Tan Sub-district, Mueang Chiang Mai District, Chiang Mai</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-dot dot-transit"></div>
+                <div class="entry-transit">
+                    <span class="row-icon-circle"><svg width="11" height="11" viewBox="0 0 18 18"><rect x="2" y="8" width="14" height="5" rx="2" fill="#ABA395"/><circle cx="5.5" cy="14" r="1.6" fill="#ABA395"/><circle cx="12.5" cy="14" r="1.6" fill="#ABA395"/><path d="M3,8 L5,4 L13,4 L15,8 Z" fill="#ABA395"/></svg></span>
+                    <span class="transit-time">14:00-14:10</span> Grab 回飯店
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="card">
+                    <div class="time-badge">17:00 - 21:00</div>
+                    <div class="event-title">週日夜市 (Sunday Walking Street)</div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Day 6 -->
+    <div class="day-container day6" id="day6" data-date="2026-07-06">
+        <div class="day-header">
+            <svg class="day-badge" viewBox="0 0 36 36" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="老虎圖示">
+                <circle cx="18" cy="18" r="18" fill="#2F7491"/>
+                <circle cx="18" cy="19" r="9" fill="#FFFFFF"/>
+                <circle cx="11" cy="11" r="3" fill="#FFFFFF"/>
+                <circle cx="25" cy="11" r="3" fill="#FFFFFF"/>
+                <path d="M12,14 l3,2 M24,14 l-3,2 M18,12 l0,3" stroke="#2F7491" stroke-width="1.2" stroke-linecap="round"/>
+                <circle cx="14" cy="18" r="1" fill="#2F7491"/>
+                <circle cx="22" cy="18" r="1" fill="#2F7491"/>
+                <path d="M16,22 l2,2 l2,-2" stroke="#2F7491" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+            </svg>
+            <div class="day-title-box">7月6日 (一) 傳統市場 ➔ 夜間動物園</div>
+        </div>
+        <div class="timeline">
+
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="card routine">
+                    <div class="time-badge">08:00 - 09:30</div>
+                    <div class="event-title">
+                        <span class="row-icon-circle"><svg width="11" height="11" viewBox="0 0 18 18"><path d="M4,6 h10 v6 a5,5 0 0 1 -10,0 z" fill="#2F7491"/><path d="M14,8 q4,0 4,3 q0,3 -4,3" stroke="#2F7491" stroke-width="1.4" fill="none"/></svg></span>
+                        飯店早餐
+                    </div>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-dot dot-transit"></div>
+                <div class="entry-transit">
+                    <span class="row-icon-circle"><svg width="11" height="11" viewBox="0 0 18 18"><rect x="2" y="8" width="14" height="5" rx="2" fill="#ABA395"/><circle cx="5.5" cy="14" r="1.6" fill="#ABA395"/><circle cx="12.5" cy="14" r="1.6" fill="#ABA395"/><path d="M3,8 L5,4 L13,4 L15,8 Z" fill="#ABA395"/></svg></span>
+                    <span class="transit-time">09:55-10:00</span> Grab
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="card">
+                    <div class="time-badge">10:00 - 14:30</div>
+                    <div class="event-title">瓦洛洛市場 Warorot Market／龍眼市集</div>
+                    <div class="info-block">
+                        <a class="map-link" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=QXRX%2B2XR, Tambon Chang Moi, Mueang Chiang Mai District, Chiang Mai">📍 QXRX+2XR, Tambon Chang Moi, Mueang Chiang Mai District, Chiang Mai</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="card routine">
+                    <div class="time-badge">14:30 - 16:45</div>
+                    <div class="event-title">
+                        <span class="row-icon-circle"><svg width="11" height="11" viewBox="0 0 18 18"><rect x="2" y="9" width="14" height="5" rx="1.5" fill="#2F7491"/><rect x="2" y="6" width="4" height="4" rx="1" fill="#2F7491"/><rect x="1" y="14" width="1.6" height="2.5" fill="#2F7491"/><rect x="15.4" y="14" width="1.6" height="2.5" fill="#2F7491"/></svg></span>
+                        飯店休息
+                    </div>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-dot dot-transit"></div>
+                <div class="entry-transit">
+                    <span class="row-icon-circle"><svg width="11" height="11" viewBox="0 0 18 18"><rect x="2" y="8" width="14" height="5" rx="2" fill="#ABA395"/><circle cx="5.5" cy="14" r="1.6" fill="#ABA395"/><circle cx="12.5" cy="14" r="1.6" fill="#ABA395"/><path d="M3,8 L5,4 L13,4 L15,8 Z" fill="#ABA395"/></svg></span>
+                    <span class="transit-time">16:45-17:00</span> Grab
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="card">
+                    <div class="time-badge">17:00 - 20:00</div>
+                    <div class="event-title">清邁夜間動物園</div>
+                    <div class="info-block">
+                        <a class="map-link" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=33, Nong Kwai, Hang Dong District, Chiang Mai">📍 33, Nong Kwai, Hang Dong District, Chiang Mai</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-dot dot-transit"></div>
+                <div class="entry-transit">
+                    <span class="row-icon-circle"><svg width="11" height="11" viewBox="0 0 18 18"><rect x="2" y="8" width="14" height="5" rx="2" fill="#ABA395"/><circle cx="5.5" cy="14" r="1.6" fill="#ABA395"/><circle cx="12.5" cy="14" r="1.6" fill="#ABA395"/><path d="M3,8 L5,4 L13,4 L15,8 Z" fill="#ABA395"/></svg></span>
+                    <span class="transit-time">20:00-20:20</span> Grab 回飯店
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Day 7 -->
+    <div class="day-container day7" id="day7" data-date="2026-07-07">
+        <div class="day-header">
+            <svg class="day-badge" viewBox="0 0 36 36" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="寺廟塔圖示">
+                <circle cx="18" cy="18" r="18" fill="#8C6D3F"/>
+                <rect x="10" y="24" width="16" height="3" rx="1" fill="#FFFFFF"/>
+                <path d="M12 24 L24 24 L21 18 L15 18 Z" fill="#FFFFFF"/>
+                <path d="M15 18 L21 18 L19 13 L17 13 Z" fill="#FFFFFF"/>
+                <line x1="18" y1="13" x2="18" y2="8" stroke="#FFFFFF" stroke-width="1.5"/>
+                <circle cx="18" cy="7" r="1.3" fill="#FFFFFF"/>
+            </svg>
+            <div class="day-title-box">7月7日 (二) 古城步行 ➔ 運河市集</div>
+        </div>
+        <div class="timeline">
+
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="card routine">
+                    <div class="time-badge">08:00 - 09:30</div>
+                    <div class="event-title">
+                        <span class="row-icon-circle"><svg width="11" height="11" viewBox="0 0 18 18"><path d="M4,6 h10 v6 a5,5 0 0 1 -10,0 z" fill="#8C6D3F"/><path d="M14,8 q4,0 4,3 q0,3 -4,3" stroke="#8C6D3F" stroke-width="1.4" fill="none"/></svg></span>
+                        飯店早餐
+                    </div>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="card">
+                    <div class="time-badge">09:30 - 10:30</div>
+                    <div class="event-title">塔佩門</div>
+                    <div class="info-block">
+                        <span class="row-icon-circle" style="vertical-align:middle;"><svg width="11" height="11" viewBox="0 0 18 18"><ellipse cx="6" cy="6" rx="2.2" ry="3" fill="#8A8273" transform="rotate(-15 6 6)"/><ellipse cx="12" cy="12" rx="2.2" ry="3" fill="#8A8273" transform="rotate(15 12 12)"/></svg></span>
+                        步行可達
+                    </div>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="card">
+                    <div class="time-badge">10:30 - 12:00</div>
+                    <div class="event-title">柴迪隆寺</div>
+                    <div class="info-block">
+                        <span class="row-icon-circle" style="vertical-align:middle;"><svg width="11" height="11" viewBox="0 0 18 18"><ellipse cx="6" cy="6" rx="2.2" ry="3" fill="#8A8273" transform="rotate(-15 6 6)"/><ellipse cx="12" cy="12" rx="2.2" ry="3" fill="#8A8273" transform="rotate(15 12 12)"/></svg></span>
+                        步行可達
+                    </div>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="card routine">
+                    <div class="time-badge">12:00 - 15:00</div>
+                    <div class="event-title">
+                        <span class="row-icon-circle"><svg width="11" height="11" viewBox="0 0 18 18"><rect x="2" y="9" width="14" height="5" rx="1.5" fill="#8C6D3F"/><rect x="2" y="6" width="4" height="4" rx="1" fill="#8C6D3F"/><rect x="1" y="14" width="1.6" height="2.5" fill="#8C6D3F"/><rect x="15.4" y="14" width="1.6" height="2.5" fill="#8C6D3F"/></svg></span>
+                        飯店休息
+                    </div>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="card">
+                    <div class="time-badge">15:00 - 17:00</div>
+                    <div class="event-title">湄卡運河市集店 Khlong Mae Kha</div>
+                    <div class="info-block">
+                        <a class="map-link" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=118 Ragang Rd, Haiya Sub-district, Mueang Chiang Mai District, Chiang Mai">📍 118 Ragang Rd, Haiya Sub-district, Mueang Chiang Mai District, Chiang Mai</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="card routine">
+                    <div class="time-badge">17:00 - 22:00</div>
+                    <div class="event-title">
+                        <span class="row-icon-circle"><svg width="11" height="11" viewBox="0 0 18 18"><rect x="2" y="9" width="14" height="5" rx="1.5" fill="#8C6D3F"/><rect x="2" y="6" width="4" height="4" rx="1" fill="#8C6D3F"/><rect x="1" y="14" width="1.6" height="2.5" fill="#8C6D3F"/><rect x="15.4" y="14" width="1.6" height="2.5" fill="#8C6D3F"/></svg></span>
+                        飯店休息
+                    </div>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-dot dot-transit"></div>
+                <div class="entry-transit">
+                    <span class="row-icon-circle"><svg width="11" height="11" viewBox="0 0 18 18"><rect x="2" y="8" width="14" height="5" rx="2" fill="#ABA395"/><circle cx="5.5" cy="14" r="1.6" fill="#ABA395"/><circle cx="12.5" cy="14" r="1.6" fill="#ABA395"/><path d="M3,8 L5,4 L13,4 L15,8 Z" fill="#ABA395"/></svg></span>
+                    <span class="transit-time">22:00-22:15</span> Grab 清邁機場
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Day 8 -->
+    <div class="day-container day8" id="day8" data-date="2026-07-08">
+        <div class="day-header">
+            <svg class="day-badge" viewBox="0 0 36 36" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="飛機圖示">
+                <circle cx="18" cy="18" r="18" fill="#6B5847"/>
+                <path d="M27 11 L9 18 L16 19.5 L18 27 L20.5 20 L27 11 Z" fill="#FFFFFF"/>
+            </svg>
+            <div class="day-title-box">7月8日 (三) 返台日</div>
+        </div>
+        <div class="timeline">
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="card">
+                    <div class="time-badge">01:50 - 06:40</div>
+                    <div class="event-title">清邁 ➔ 台北 (返程班機)</div>
+                    <div class="info-block">
+                        <div class="remark">Thai AirAsia, FD 242 Economy Promo</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 預訂資訊面板 -->
+    <div class="info-panel" id="infoPanel" style="display:none;">
+        <h3>📋 訂房與航班資訊</h3>
+        <div class="info-panel-item">
+            <div class="info-title">航班</div>
+            7/2 00:20 台北➔吉隆坡｜AirAsia X D7 379<br>
+            7/2 13:30 吉隆坡➔清邁｜AirAsia AK 856<br>
+            7/8 01:50 清邁➔台北｜Thai AirAsia FD 242
+        </div>
+        <div class="info-panel-item">
+            <div class="info-title">1. Khum Phaya Resort & Spa（7/2 - 7/4）</div>
+            <a class="map-link" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=137, Tambon Nong Pa Khrang, Mueang Chiang Mai District, Chiang Mai">📍 開啟地圖</a>
+        </div>
+        <div class="info-panel-item">
+            <div class="info-title">2. Tawan Riverside - Elephant Resort（7/4 - 7/5）</div>
+            <a class="map-link" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=A, 202 Moo 9 T, Mae Win, Mae Wang District, Chiang Mai">📍 開啟地圖</a>
+        </div>
+        <div class="info-panel-item">
+            <div class="info-title">3. POR Thapae Gate（7/5 - 7/7）</div>
+            <a class="map-link" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=9 Rachadamnoen 3 Alley, Si Phum, Mueang Chiang Mai District, Chiang Mai">📍 開啟地圖</a>
+        </div>
+    </div>
+
+    <!-- 底部固定工具欄 -->
+    <div class="footer-bar">
+        <div class="footer-btn" id="infoBtn">📋 航班與飯店</div>
+        <div class="footer-btn" id="topBtn">⬆️ 回頂部</div>
+    </div>
+
+    <script>
+        var infoPanel = document.getElementById('infoPanel');
+        document.getElementById('infoBtn').addEventListener('click', function () {
+            infoPanel.style.display = (infoPanel.style.display === 'none') ? 'block' : 'none';
+        });
+
+        document.getElementById('topBtn').addEventListener('click', function () {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        var navItems = Array.prototype.slice.call(document.querySelectorAll('.nav-item'));
+        var dayContainers = Array.prototype.slice.call(document.querySelectorAll('.day-container'));
+
+        if ('IntersectionObserver' in window) {
+            var observer = new IntersectionObserver(function (entries) {
+                entries.forEach(function (entry) {
+                    if (entry.isIntersecting) {
+                        var id = entry.target.id;
+                        navItems.forEach(function (item) {
+                            var isActive = item.getAttribute('data-day') === id;
+                            item.classList.toggle('active', isActive);
+                            if (isActive) {
+                                item.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+                            }
+                        });
+                    }
+                });
+            }, { rootMargin: '-30% 0px -60% 0px', threshold: 0 });
+
+            dayContainers.forEach(function (day) { observer.observe(day); });
+        }
+
+        /* 自動標記「今天」並捲動到當天行程 */
+        function pad(n) { return n < 10 ? '0' + n : '' + n; }
+        var now = new Date();
+        var todayStr = now.getFullYear() + '-' + pad(now.getMonth() + 1) + '-' + pad(now.getDate());
+
+        dayContainers.forEach(function (day) {
+            if (day.getAttribute('data-date') === todayStr) {
+                var titleBox = day.querySelector('.day-title-box');
+                var badge = document.createElement('span');
+                badge.className = 'today-badge';
+                badge.textContent = '今天';
+                titleBox.appendChild(badge);
+
+                var navItem = document.querySelector('.nav-item[data-day="' + day.id + '"]');
+                if (navItem) {
+                    var dot = document.createElement('span');
+                    dot.className = 'today-dot';
+                    navItem.appendChild(dot);
+                }
+
+                window.setTimeout(function () {
+                    day.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }, 300);
+            }
+        });
+    </script>
+
+</body>
+</html>
